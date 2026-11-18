@@ -1,5 +1,6 @@
 package kv.tienda.controlador;
 
+import jakarta.validation.Valid;
 import kv.tienda.modelo.Juego;
 import kv.tienda.servicio.JuegoServicio;
 import org.slf4j.Logger;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,16 +34,22 @@ public class JuegoControlador {
     }
 
     @GetMapping("/agregar")
-    public String mostrarAgregar() {
+    public String mostrarAgregar(ModelMap modelo) {
+        modelo.put("juegoForma", new  Juego());
         return "agregar"; // agregar.html
     }
 
     // Escucha las peticiones POST que llegan desde el formulario en la ruta "/agregar"
     @PostMapping("/agregar")
-    public String agregar(@ModelAttribute("juegoForma") Juego juego) {
+    public String agregar(@Valid @ModelAttribute("juegoForma") Juego juego,
+                          BindingResult resultado) {
 
-        // Registra en la consola/log los datos del juego recibido para depuración
-        logger.info("Juego agregado: " + juego);
+        if (resultado.hasErrors()) {
+            logger.error("Error en el proceso de agregar del juego");
+            return "agregar";
+        }
+
+        logger.info("Agregando el juego: " + juego);
 
         // Llama al servicio para guardar el objeto 'juego' en la base de datos
         juegoServicio.guardarJuego(juego);
