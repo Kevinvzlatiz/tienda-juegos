@@ -19,6 +19,11 @@
 
 <div class="container-fluid mt-5 px-4">
 
+    <div class="alert alert-success>"
+         th:if="${mensaje}"
+         th:text="${mensaje}">
+    </div>
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Lista de Juegos</h1>
 

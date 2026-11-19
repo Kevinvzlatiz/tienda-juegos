@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -35,24 +36,28 @@ public class JuegoControlador {
 
     @GetMapping("/agregar")
     public String mostrarAgregar(ModelMap modelo) {
-        modelo.put("juegoForma", new  Juego());
+        modelo.put("juegoForma", new Juego());
         return "agregar"; // agregar.html
     }
 
     // Escucha las peticiones POST que llegan desde el formulario en la ruta "/agregar"
     @PostMapping("/agregar")
     public String agregar(@Valid @ModelAttribute("juegoForma") Juego juego,
-                          BindingResult resultado) {
+                          BindingResult resultado, RedirectAttributes redirect) {
 
+        // Revisamos si la validacion encontro errores
         if (resultado.hasErrors()) {
             logger.error("Error en el proceso de agregar del juego");
             return "agregar";
         }
 
+        // Si no hubo errores, registramos en el log un mensaje informativo con el objeto guardado
         logger.info("Agregando el juego: " + juego);
 
         // Llama al servicio para guardar el objeto 'juego' en la base de datos
         juegoServicio.guardarJuego(juego);
+
+        redirect.addFlashAttribute("mensaje", "Juego agregado correctamente"); // Mensaje que se muestra una sola vez
 
         // Redirige al usuario de vuelta a la página principal ("/") para evitar reenvíos duplicados
         return "redirect:/";
