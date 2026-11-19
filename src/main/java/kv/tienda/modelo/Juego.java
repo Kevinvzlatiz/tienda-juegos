@@ -1,9 +1,6 @@
 package kv.tienda.modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -25,8 +22,9 @@ public class Juego { // Capa entidad
     @NotBlank(message = "El nombre es obligatorio")
     String nombreJuego;
 
-    @NotBlank(message = "El nombre es obligatorio")
-    String categoriaJuego;
+    @ManyToOne
+    @JoinColumn(name = "id_categoria")
+    Categoria categoria;
 
     @NotNull(message = "El precio es obligatorio")
     @Positive(message = "El precio debe ser mayor a 0")
