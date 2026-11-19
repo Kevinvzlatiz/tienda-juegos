@@ -12,4 +12,6 @@ public interface IJuegoServicio {
     public void guardarJuego(Juego juego);
 
     public void eliminarJuego(Integer idJuego);
+
+    List<Juego> buscarPorNombre(String nombre);
 }

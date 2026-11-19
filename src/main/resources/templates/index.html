@@ -16,22 +16,48 @@
         </a>
     </div>
 </nav>
-
+<!-- Titulo y boton de agregar -->
 <div class="container-fluid mt-5 px-4">
 
-    <div class="alert alert-success>"
+    <!-- Alerta de exito cuando se agrega un juego nuevo -->
+    <div class="alert alert-success"
          th:if="${mensaje}"
          th:text="${mensaje}">
     </div>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
+
         <h1>Lista de Juegos</h1>
 
         <a class="btn btn-primary" th:href="@{/agregar}">
             + Agregar Juego
         </a>
+
     </div>
 
+    <!-- Barra de busqueda -->
+    <form class="d-flex mb-4"
+          th:action="@{/buscar}"
+          method="get">
+
+        <input class="form-control me-2"
+               type="search"
+               name="nombre"
+               placeholder="Buscar juego..."
+               aria-label="Buscar">
+
+        <button class="btn btn-outline-success">
+            Buscar
+        </button>
+
+    </form>
+
+    <div class="alert alert-warning"
+    th:if="${juegos.isEmpty()}">
+        No se encontraron juegos con ese nombre :(
+    </div>
+
+    <!-- Lista de juegos -->
     <div class="card shadow">
         <div class="card-body">
 

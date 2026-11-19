@@ -33,4 +33,11 @@ public class JuegoServicio implements IJuegoServicio { // Capa Servicio
         juegoRepositorio.deleteById(idJuego);
     }
 
+    // Retornamos la lista de juegos que tengan el nombre que busquemos ignorando mayusculas y minusculas
+    @Override
+    public List<Juego> buscarPorNombre(String nombre) {
+        return juegoRepositorio.findByNombreJuegoContainingIgnoreCase(nombre);
+    }
+
+
 }

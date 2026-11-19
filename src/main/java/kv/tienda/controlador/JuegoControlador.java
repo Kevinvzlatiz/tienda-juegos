@@ -9,12 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.swing.*;
 import java.util.List;
 
 @Controller
@@ -82,6 +80,18 @@ public class JuegoControlador {
     public String eliminar(@PathVariable(value = "id") int idJuego) {
         juegoServicio.eliminarJuego(idJuego);
         return "redirect:/";
+    }
+
+    @GetMapping("/buscar")
+    public String buscarJuego(@RequestParam String nombre, ModelMap modelo) {
+
+        // Obtenemos la lista de los juegos encontrados
+        List<Juego> juegos = juegoServicio.buscarPorNombre(nombre);
+
+        // enviamos la lista a index.html
+        modelo.put("juegos", juegos);
+
+        return "index";
     }
 
 }
