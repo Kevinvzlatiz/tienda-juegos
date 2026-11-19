@@ -58,7 +58,8 @@
     </div>
 
     <!-- Lista de juegos -->
-    <div class="card shadow">
+    <div class="card shadow"
+    th:if="${!juegos.isEmpty()}">  <!-- Ocultamos la tabla si no se encuentra ningun juego con el buscador -->
         <div class="card-body">
 
             <div class="table-responsive">
