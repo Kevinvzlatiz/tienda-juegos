@@ -1,7 +1,9 @@
 package kv.tienda.controlador;
 
 import jakarta.validation.Valid;
+import kv.tienda.modelo.Categoria;
 import kv.tienda.modelo.Juego;
+import kv.tienda.servicio.CategoriaServicio;
 import kv.tienda.servicio.JuegoServicio;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,9 @@ public class JuegoControlador {
     @Autowired
     JuegoServicio juegoServicio;
 
+    @Autowired
+    CategoriaServicio categoriaServicio;
+
     @GetMapping("/")
     public String iniciar(ModelMap modelo) {
         List<Juego> juegos = juegoServicio.listarJuegos();
@@ -34,7 +39,12 @@ public class JuegoControlador {
 
     @GetMapping("/agregar")
     public String mostrarAgregar(ModelMap modelo) {
+
+        // Objeto vacío para llenar el formulario del juego
         modelo.put("juegoForma", new Juego());
+
+        // Lista de categorías para llenar el select
+        modelo.put("categorias", categoriaServicio.listarCategorias());
         return "agregar"; // agregar.html
     }
 
@@ -66,12 +76,13 @@ public class JuegoControlador {
         Juego juego = juegoServicio.buscarJuegoPorId(idJuego);
         logger.info("Juego editado: " + juego);
         modelo.put("juego", juego);
+        modelo.put("categorias", categoriaServicio.listarCategorias());
         return "editar";
     }
 
     @PostMapping("/editar")
-    public String editar(@ModelAttribute("juegoForma") Juego juego) {
-        logger.info("Juego editado: " + juego);
+    public String editar(@ModelAttribute("juego") Juego juego) {
+        //logger.info("Juego editado: " + juego);
         juegoServicio.guardarJuego(juego);
         return "redirect:/";
     }

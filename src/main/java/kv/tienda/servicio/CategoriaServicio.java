@@ -2,9 +2,12 @@ package kv.tienda.servicio;
 
 import kv.tienda.modelo.Categoria;
 import kv.tienda.repositorio.CategoriaRepositorio;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Controller
 public class CategoriaServicio implements ICategoriaServicio {
 
     private CategoriaRepositorio categoriaRepositorio;

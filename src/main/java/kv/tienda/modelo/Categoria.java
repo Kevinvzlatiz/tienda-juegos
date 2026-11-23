@@ -1,14 +1,14 @@
 package kv.tienda.modelo;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Data
+//@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Categoria {
@@ -21,5 +21,6 @@ public class Categoria {
 
     // Una categoria puede tener muchos juegos asociados
     @OneToMany(mappedBy = "categoria")
+    //@ToString.Exclude
     private List<Juego> juegos;
 }

@@ -48,13 +48,21 @@
                         </div>
 
                         <div class="mb-3">
+
                             <label class="form-label">
                                 Categoría
                             </label>
 
-                            <input class="form-control"
-                                   type="text"
-                                   th:field="*{categoriaJuego}">
+                            <select class="form-select"
+                                    th:field="*{categoria}">
+
+                                <option th:each="categoria : ${categorias}"
+                                        th:value="${categoria.idCategoria}"
+                                        th:text="${categoria.nombreCategoria}">
+                                </option>
+
+                            </select>
+
                         </div>
 
                         <div class="mb-3">
